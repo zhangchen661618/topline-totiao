@@ -11,7 +11,10 @@ import './styles/index.less'
 Vue.use(Vant)
 
 // 配置插件 VeeValidate
-Vue.use(VeeValidate)
+Vue.use(VeeValidate, {
+  // 文本框中触发验证的事件，默认是input 如果为空的话，文本框输入过程中不验证，需要调用 VeeValidate 方法验证
+  events: ''
+})
 // 配置中文包
 Validator.localize('zhCN', zhCN)
 Vue.config.productionTip = false
