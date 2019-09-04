@@ -34,7 +34,11 @@ export default {
       try {
         // data 就是接口返回数据中的data 因为响应拦截器做了处理
         const data = await login(this.user)
-        // 存储登陆的状态  跳转到首页
+        // 存储登陆的状态
+        //  1,vuex
+        this.$store.commit('setUser', data)
+        // 2,本地存储
+        // 跳转到首页
         this.$router.push('/')
         this.$toast.fail('登陆成功')
       } catch (err) {
