@@ -18,6 +18,7 @@
 
 <script>
 import { login } from '../api/user'
+import { mapMutations } from 'vuex'
 export default {
   name: 'Login',
   data () {
@@ -29,6 +30,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setUser']),
     // 点击按钮处理登陆
     async handleLogin () {
       try {
@@ -36,8 +38,9 @@ export default {
         const data = await login(this.user)
         // 存储登陆的状态
         //  1,vuex
-        this.$store.commit('setUser', data)
-        // 2,本地存储
+        // 2,本地存储  这两件事在 store 中完成
+        // this.$store.commit('setUser', data)
+        this.setUser(data)
 
         // 跳转到首页
         this.$router.push('/')
