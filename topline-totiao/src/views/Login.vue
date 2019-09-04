@@ -32,10 +32,13 @@ export default {
     // 点击按钮处理登陆
     async handleLogin () {
       try {
-        const res = await login(this.user)
-        console.log(res)
+        // data 就是接口返回数据中的data 因为响应拦截器做了处理
+        const data = await login(this.user)
+        // 存储登陆的状态  跳转到首页
+        this.$router.push('/')
+        this.$toast.fail('登陆成功')
       } catch (err) {
-        console.log(err)
+        this.$toast.fail('登陆失败')
       }
     }
   }
