@@ -69,22 +69,18 @@ export default {
     async handleLogin () {
       try {
         // 表单验证
-        this.$validator.validate().then(async valid => {
-          if (!valid) { // 验证失败
-            return
-          }
-          // 验证成功
-          // data 就是接口返回数据中的data 因为响应拦截器做了处理
-          const data = await login(this.user)
-          // 存储登陆的状态
-          //  1,vuex 2,本地存储  这两件事在 store 中完成
-          // this.$store.commit('setUser', data)
-          this.setUser(data)
-
-          // 跳转到首页
-          this.$router.push('/')
-          this.$toast.success('登陆成功')
-        })
+        // validate() 返回的是promise对象，所有可以使用 await调用
+        const valid = await this.$validator.validate()
+        if (!valid) {
+          return // 验证失败直接出去
+        }
+        // 验证成功
+        const data = await login(this.user)
+        // 存储登陆的状态  1,vuex 2,本地存储  这两件事在 store 中完成
+        this.setUser(data)
+        // 跳转到首页
+        this.$router.push('/')
+        this.$toast.success('登陆成功')
       } catch (err) {
         this.$toast.fail('登陆失败')
       }
