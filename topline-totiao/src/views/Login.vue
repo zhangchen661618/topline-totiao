@@ -4,7 +4,13 @@
     <van-nav-bar title="登陆"/>
     <!--输入框  -->
     <van-cell-group>
-        <van-field v-model="user.mobile"  left-icon="phone-o" placeholder="请输入手机号码" />
+        <!-- 使用 VeeValidate  1.通过v-validate 设置验证规则  2.设置文本框的name属性  3.展示验证错误信息-->
+        <van-field
+         v-validate="'required'"
+         name="mobile"
+         clearable
+         :error-message="errors.first('mobile')"
+         v-model="user.mobile"  left-icon="phone-o" placeholder="请输入手机号码" />
         <van-field v-model="user.code"  left-icon="star-o" placeholder="请输入验证码" >
             <van-button slot="button" type="default" size='small'>发送验证码</van-button>
         </van-field>
@@ -44,7 +50,7 @@ export default {
 
         // 跳转到首页
         this.$router.push('/')
-        this.$toast.fail('登陆成功')
+        this.$toast.success('登陆成功')
       } catch (err) {
         this.$toast.fail('登陆失败')
       }
