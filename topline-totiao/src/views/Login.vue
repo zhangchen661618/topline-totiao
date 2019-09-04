@@ -13,6 +13,7 @@
          v-model="user.mobile"
          left-icon="phone-o"
          placeholder="请输入手机号码" />
+
         <van-field
          v-validate="'required|digits:6'"
          name="code"
@@ -42,6 +43,25 @@ export default {
         code: '246810'
       }
     }
+  },
+  created () {
+    // 配置 VeeValidate 的验证信息
+    const dict = {
+      custom: {
+        // 验证的文本信息
+        mobile: {
+          // 验证规则之后失败的提示信息
+          required: '请输入手机号码',
+          digits: '手机号码为11位数字'
+        },
+        code: {
+          // 验证规则之后失败的提示信息
+          required: '请输入验证码',
+          digits: '验证码为6位数字'
+        }
+      }
+    }
+    this.$validator.localize('custom', dict)
   },
   methods: {
     ...mapMutations(['setUser']),
