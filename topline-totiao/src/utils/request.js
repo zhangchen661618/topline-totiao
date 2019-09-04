@@ -1,5 +1,6 @@
 import axios from 'axios'
 import JSONbig from 'json-bigint'
+import store from '../store'
 // 创建一个axios 的实例 设置不同的 baseURL
 const instance = axios.create({
   baseURL: 'http://ttapi.research.itcast.cn'
@@ -18,7 +19,12 @@ instance.defaults.transformResponse = [function (data) {
 }]
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
-  // Do something before request is sent
+  // 判断是否有登陆状态  主要，此处是一个普通的js模块，不是组件，要导入store
+  if (store.state.user) {
+    // 如果有登陆状态请求的时候，自动携带token
+    config.headers.Authorization = `Bearer ${store.state.user.token}`
+  }
+
   return config
 }, function (error) {
   // Do something with request error
