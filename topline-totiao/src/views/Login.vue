@@ -38,6 +38,7 @@ export default {
         //  1,vuex
         this.$store.commit('setUser', data)
         // 2,本地存储
+
         // 跳转到首页
         this.$router.push('/')
         this.$toast.fail('登陆成功')
