@@ -6,13 +6,21 @@
     <van-cell-group>
         <!-- 使用 VeeValidate  1.通过v-validate 设置验证规则  2.设置文本框的name属性  3.展示验证错误信息-->
         <van-field
-         v-validate="'required'"
+         v-validate="'required|digits:11'"
          name="mobile"
-         clearable
          :error-message="errors.first('mobile')"
-         v-model="user.mobile"  left-icon="phone-o" placeholder="请输入手机号码" />
-        <van-field v-model="user.code"  left-icon="star-o" placeholder="请输入验证码" >
-            <van-button slot="button" type="default" size='small'>发送验证码</van-button>
+         clearable
+         v-model="user.mobile"
+         left-icon="phone-o"
+         placeholder="请输入手机号码" />
+        <van-field
+         v-validate="'required|digits:6'"
+         name="code"
+         :error-message="errors.first('code')"
+        v-model="user.code"
+        left-icon="star-o"
+        placeholder="请输入验证码" >
+            <van-button slot="button" type="default" size='small'>获取验证码</van-button>
         </van-field>
     </van-cell-group>
     <!-- 登陆按钮 -->
