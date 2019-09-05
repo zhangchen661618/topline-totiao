@@ -6,7 +6,7 @@
         fixed
         />
      <!-- 频道列表 -->
-     <van-tabs animated>
+     <van-tabs animated v-model="activeIndex">
         <!-- 遍历标签页，显示频道列表 -->
         <van-tab v-for="channel in channels"
          :title="channel.name"
@@ -37,7 +37,8 @@ export default {
       list: [], // 列表用的数据
       loading: false,
       finished: false,
-      channels: [] // 频道列表
+      channels: [], // 频道列表
+      activeIndex: 0 // tab是组件中默认显示的tab项的索引  通过该index，可以找到当前的频道对象
     }
   },
   created () {
