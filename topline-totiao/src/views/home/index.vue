@@ -10,7 +10,7 @@
         <!-- 遍历标签页，显示频道列表 -->
         <van-tab v-for="channel in channels"
          :title="channel.name"
-         :key="channel.id">
+         :key="channel.id.toString()">
              <!-- 文章列表 不同的标签页有不同的列表-->
           <van-list
             v-model="currentChannel.loading"
@@ -20,7 +20,7 @@
             >
             <van-cell
               v-for="article in currentChannel.articles"
-              :key="article.art_id"
+              :key="article.art_id.toString()"
               :title="article.title"/>
             </van-list>
           </van-tab>
