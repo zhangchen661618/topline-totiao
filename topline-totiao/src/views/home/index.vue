@@ -59,8 +59,19 @@ export default {
 <style lang="less" scoped>
   // 在scoped中书写的样式，给动态生成的标签或者子组件中不可用
   // 深度作用选择器 /deep/
-  .van-tabs /deep/ .van-tabs__content{
-    margin-top: 46px;
+.van-tabs {
+  /deep/ .van-tabs__wrap {
+    position: fixed;
+    top: 46px;
+    left: 0;
+    z-index: 100;
+  }
+  /deep/ .van-tabs__content {
+    margin-top: 90px;
     margin-bottom: 50px;
   }
+}
+.close {
+  float: right;
+}
 </style>
