@@ -29,8 +29,20 @@
               <van-cell
                 v-for="article in currentChannel.articles"
                 :key="article.art_id.toString()"
-                :title="article.title"/>
-              </van-list>
+                :title="article.title">
+
+                <div slot='label'>
+
+                  <p>
+                    <span>{{article.aut_name}}</span>&nbsp;
+                    <span>{{article.comm_count}}评论</span>&nbsp;
+                    <span>{{article.pubdate}}</span>&nbsp;
+                    <van-icon name='cross' class="close"/>
+                  </p>
+                </div>
+              </van-cell>
+
+            </van-list>
           </van-pull-refresh>
         </van-tab>
       </van-tabs>
@@ -138,6 +150,7 @@ export default {
     position: fixed;
     top: 46px;
     left: 0px;
+    right: 10px;
     z-index: 100;
   }
   /deep/ .van-tabs__content {
@@ -147,5 +160,6 @@ export default {
 }
 .close {
   float: right;
+  font-size: 18px;
 }
 </style>
