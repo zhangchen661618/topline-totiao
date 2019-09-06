@@ -32,7 +32,14 @@
                 :title="article.title">
 
                 <div slot='label'>
-
+                  <!-- grid 显示封面 -->
+                  <van-grid v-if="article.cover.type" :border="false" :column-num="3">
+                    <van-grid-item
+                    v-for="(img,index) in article.cover.images"
+                    :key="img+index">
+                      <van-image height="80" :src="img" />
+                    </van-grid-item>
+                  </van-grid>
                   <p>
                     <span>{{article.aut_name}}</span>&nbsp;
                     <span>{{article.comm_count}}评论</span>&nbsp;
