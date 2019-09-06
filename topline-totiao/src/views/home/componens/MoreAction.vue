@@ -1,12 +1,21 @@
 <template>
-  <div>
-      121
-  </div>
+    <van-dialog
+        v-model="show"
+        :showConfirmButton='false'
+        closeOnClickOverlay
+        >
+        hello
+    </van-dialog>
 </template>
 
 <script>
 export default {
-  name: 'MoreAction'
+  name: 'MoreAction',
+  data () {
+    return {
+      show: true
+    }
+  }
 }
 </script>
 
