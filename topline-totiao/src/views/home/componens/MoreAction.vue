@@ -1,6 +1,7 @@
 <template>
     <van-dialog
-        v-model="show"
+        :value="value"
+        @input="$emit('input',$event)"
         :showConfirmButton='false'
         closeOnClickOverlay
         >
@@ -22,9 +23,15 @@
 <script>
 export default {
   name: 'MoreAction',
+  props: {
+    value: {
+      type: Boolean,
+      required: true
+    }
+  },
   data () {
     return {
-      show: true,
+
       showReports: false
     }
   }

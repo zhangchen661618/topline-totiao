@@ -50,17 +50,17 @@
                     <span>{{article.aut_name}}</span>&nbsp;
                     <span>{{article.comm_count}}评论</span>&nbsp;
                     <span>{{article.pubdate | fmtDate}}</span>&nbsp;
-                    <van-icon name='cross' class="close"/>
+
+                    <van-icon name='cross' class="close" @click="showMoreAction=true"/>
                   </p>
                 </div>
               </van-cell>
-
             </van-list>
           </van-pull-refresh>
         </van-tab>
       </van-tabs>
       <!-- 弹出层 moreAction-->
-      <more-action></more-action>
+      <more-action v-model="showMoreAction"></more-action>
   </div>
 </template>
 
@@ -86,7 +86,8 @@ export default {
       finished: false,
       channels: [], // 频道列表
       activeIndex: 0, // tab是组件中默认显示的tab项的索引  通过该index，可以找到当前的频道对象
-      successText: '' // 下拉更新完毕之后，成功的提示
+      successText: '', // 下拉更新完毕之后，成功的提示
+      showMoreAction: false // moreAction组件点X号显示或者隐藏
     }
   },
   created () {
