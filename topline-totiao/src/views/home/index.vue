@@ -7,13 +7,18 @@
         />
      <!-- 频道列表 -->
      <van-tabs animated v-model="activeIndex">
+
         <!-- 遍历标签页，显示频道列表 -->
-        <van-tab v-for="channel in channels"
+        <van-tab
+         v-for="channel in channels"
          :title="channel.name"
-         :key="channel.id.toString()">
+         :key="channel.id">
 
          <!-- 下拉加载更改组件 -->
-          <van-pull-refresh v-model="currentChannel.pullloading" @refresh="onRefresh">
+          <van-pull-refresh
+            :success-text="successText"
+            v-model="currentChannel.pullloading"
+            @refresh="onRefresh">
             <!-- 文章列表 不同的标签页有不同的列表-->
             <van-list
               v-model="currentChannel.loading"
@@ -43,7 +48,8 @@ export default {
       loading: false,
       finished: false,
       channels: [], // 频道列表
-      activeIndex: 0 // tab是组件中默认显示的tab项的索引  通过该index，可以找到当前的频道对象
+      activeIndex: 0, // tab是组件中默认显示的tab项的索引  通过该index，可以找到当前的频道对象
+      successText: '' // 下拉更新完毕之后，成功的提示
     }
   },
   created () {
@@ -101,11 +107,24 @@ export default {
       }
     },
     // 下拉加载更多
-    onRefresh () {
-      setTimeout(() => {
-        this.$toast('刷新成功')
+    async onRefresh () {
+      try {
+        const data = await getArticles({
+          // 频道id
+          channel_id: this.currentChannel.id,
+          // 时间戳
+          timestamp: Date.now(),
+          // 是否包含置顶1  0不包含
+          with_top: 1
+        })
+        // 设置加载完毕
         this.currentChannel.pullloading = false
-      }, 500)
+        // 把数据放到数组的最前面(最新数据)
+        this.currentChannel.articles.unshift(...data.results)
+        this.successText = `加载了${data.results.length}条数据`
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 }
