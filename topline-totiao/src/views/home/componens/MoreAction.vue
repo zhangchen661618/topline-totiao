@@ -6,9 +6,9 @@
         closeOnClickOverlay
         >
         <van-cell-group v-show="!showReports">
-            <van-cell title="不感兴趣" icon="location-o"/>
+            <van-cell title="不感兴趣" icon="location-o" @click="handle('dislike')"/>
             <van-cell title="反馈垃圾内容" icon="location-o" is-link @click="showReports=true"/>
-            <van-cell title="拉黑作者" icon="location-o"/>
+            <van-cell title="拉黑作者" icon="location-o" @click="handle('blacklist')"/>
         </van-cell-group>
         <!-- 举报文章 -->
         <van-cell-group v-show="showReports">
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { dislikeArticle } from '../../../api/article'
 export default {
   name: 'MoreAction',
   props: {
@@ -35,8 +36,31 @@ export default {
   },
   data () {
     return {
-
       showReports: false
+    }
+  },
+  // 点击所有的cell的时候 都执行这个方法 通过type判断具体要执行的操作
+  methods: {
+    handle (type) {
+      switch (type) {
+        case 'dislike':
+          // 不感兴趣
+          this.dislike()
+          break
+        case 'blacklist':
+          break
+      }
+    },
+    async dislike () {
+      try {
+        await dislikeArticle(this.article.art_id)
+        this.$toast.success('操作成功')
+        // 隐藏弹出层  移除数据
+        // 告知父组件，操作成功
+        this.$emit('handleSuccess')
+      } catch (err) {
+        this.$toast.fail('操作失败')
+      }
     }
   }
 }
