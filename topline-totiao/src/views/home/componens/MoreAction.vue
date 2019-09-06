@@ -27,6 +27,10 @@ export default {
     value: {
       type: Boolean,
       required: true
+    },
+    article: {
+      type: Object,
+      required: true
     }
   },
   data () {

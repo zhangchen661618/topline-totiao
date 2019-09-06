@@ -50,8 +50,8 @@
                     <span>{{article.aut_name}}</span>&nbsp;
                     <span>{{article.comm_count}}评论</span>&nbsp;
                     <span>{{article.pubdate | fmtDate}}</span>&nbsp;
-
-                    <van-icon name='cross' class="close" @click="showMoreAction=true"/>
+                    <!-- 点击X按钮，纪录当前的文章对象 -->
+                    <van-icon name='cross' class="close" @click="handleAction(article)"/>
                   </p>
                 </div>
               </van-cell>
@@ -59,8 +59,8 @@
           </van-pull-refresh>
         </van-tab>
       </van-tabs>
-      <!-- 弹出层 moreAction-->
-      <more-action v-model="showMoreAction"></more-action>
+      <!-- 弹出层 moreAction     如果article的值为null 不显示more-action-->
+      <more-action v-if="currentArticle" :article="currentArticle" v-model="showMoreAction"></more-action>
   </div>
 </template>
 
@@ -87,7 +87,8 @@ export default {
       channels: [], // 频道列表
       activeIndex: 0, // tab是组件中默认显示的tab项的索引  通过该index，可以找到当前的频道对象
       successText: '', // 下拉更新完毕之后，成功的提示
-      showMoreAction: false // moreAction组件点X号显示或者隐藏
+      showMoreAction: false, // moreAction组件点X号显示或者隐藏
+      currentArticle: null // 点击X纪录当前文章对象
     }
   },
   created () {
@@ -163,6 +164,11 @@ export default {
       } catch (err) {
         console.log(err)
       }
+    },
+    // 点击X按钮，弹出MoreAction，并且记录对应的文章列表
+    handleAction (article) {
+      this.showMoreAction = true
+      this.currentArticle = article
     }
   }
 }
