@@ -22,6 +22,7 @@
 
 <script>
 import { dislikeArticle } from '../../../api/article'
+import { blacklists } from '../../../api/user'
 export default {
   name: 'MoreAction',
   props: {
@@ -48,9 +49,23 @@ export default {
           this.dislike()
           break
         case 'blacklist':
+          // 拉黑作者
+          this.blacklistUser()
           break
       }
     },
+    // 拉黑作者
+    async blacklistUser () {
+      try {
+        await blacklists(this.article.aut_id)
+        // 通知父组件 拉黑成功  隐藏对话框，删除数据
+        this.$emit('handleSuccess')
+        this.$toast.success('操作成功')
+      } catch (err) {
+        this.$toast.fail('操作失败')
+      }
+    },
+    // 不感兴趣
     async dislike () {
       try {
         await dislikeArticle(this.article.art_id)
