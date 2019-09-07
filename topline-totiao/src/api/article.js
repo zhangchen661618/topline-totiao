@@ -25,3 +25,14 @@ export const dislikeArticle = (id) => {
     target: id // 文章的id
   })
 }
+
+// 举报文章
+export const reportArtice = ({
+  target, // 文章id
+  type // 举报类型
+}) => {
+  return request.post('/app/v1_0/article/reports', {
+    target,
+    type
+  })
+}
