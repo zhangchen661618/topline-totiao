@@ -7,7 +7,8 @@
         />
      <!-- 频道列表 -->
      <van-tabs animated v-model="activeIndex">
-
+       <!-- 小按钮 ，点击弹出频道管理的弹出层 -->
+       <van-icon slot="nav-right" name="wap-nav" class="nav-btn" @click="showChannelEdit=true"/>
         <!-- 遍历标签页，显示频道列表 -->
         <van-tab
          v-for="channel in channels"
@@ -67,7 +68,7 @@
         v-model="showMoreAction"></more-action>
 
         <!-- 弹出频道管理 ChannelEdit -->
-        <channel-edit></channel-edit>
+        <channel-edit v-model="showChannelEdit"></channel-edit>
   </div>
 </template>
 
@@ -91,14 +92,15 @@ export default {
   },
   data () {
     return {
-      list: [], // 列表用的数据
-      loading: false,
-      finished: false,
+      // list: [], // 列表用的数据
+      // loading: false,
+      // finished: false,
       channels: [], // 频道列表
       activeIndex: 0, // tab是组件中默认显示的tab项的索引  通过该index，可以找到当前的频道对象
       successText: '', // 下拉更新完毕之后，成功的提示
       showMoreAction: false, // moreAction组件点X号显示或者隐藏
-      currentArticle: null // 点击X纪录当前文章对象
+      currentArticle: null, // 点击X纪录当前文章对象
+      showChannelEdit: false // 控制频道管理的弹出层显示
     }
   },
   created () {
@@ -231,5 +233,13 @@ export default {
 .close {
   float: right;
   font-size: 18px;
+}
+.nav-btn{
+  position: fixed;
+  right: 10px;
+  line-height: 44px;
+  font-size: 22px;
+  background-color: #ffffff;
+  opacity: 0.8;
 }
 </style>
