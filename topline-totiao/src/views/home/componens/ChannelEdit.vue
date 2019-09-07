@@ -58,6 +58,8 @@
 
 <script>
 import { getAllChannels } from '../../../api/channel'
+import { mapState } from 'vuex'
+import { setItem } from '../../../utils/localStorage'
 export default {
   name: 'ChannelEdit',
   props: {
@@ -77,6 +79,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['user']),
     // 推荐频道
     recomendChannels () {
       // 1 获取我的频道中所有id组成的数组
@@ -115,8 +118,18 @@ export default {
       if (!this.isEdit) {
         // 告诉父组件，选中频道的索引  关闭对话框
         this.$emit('activeChange', index)
+        return
       }
       // 2 编辑模式
+      // 把点击的频道，从我的频道移除
+      this.channels.splice(index, 1)
+      // 判断是否登陆  通过 mapstate 做了映射
+      if (this.user) {
+        // 登陆 发送请求
+        return
+      }
+      // 没有登陆把频道列表纪录到本地存储中
+      setItem('channels', this.channels)
     }
   }
 
