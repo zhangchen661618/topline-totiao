@@ -44,9 +44,9 @@
     <van-cell title="推荐频道" label="点击添加频道" />
     <van-grid>
       <van-grid-item
-        v-for="value in 8"
-        :key="value"
-        text="文字"
+        v-for="channel in recomendChannels"
+        :key="channel.id"
+        :text="channel.name"
       />
     </van-grid>
 
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import { getAllChannels } from '../../../api/channel'
 export default {
   name: 'ChannelEdit',
   props: {
@@ -61,15 +62,45 @@ export default {
       type: Boolean,
       required: true
     },
+    // 接收父组件传过来的我的频道
     channels: {
       type: Array,
       required: true
     }
   },
+  computed: {
+    // 推荐频道
+    recomendChannels () {
+      // 1 获取我的频道中所有id组成的数组
+      const ids = this.channels.map((channel) => {
+        return channel.id
+      })
+      // 2 过滤所有频道，把频道id出现在上面数组中的项去除
+      return this.allChannels.filter((channel) => {
+        return !ids.includes(channel.id)
+      })
+    }
+  },
   data () {
     return {
-      isEdit: false // 是否是编辑模式
+      isEdit: false, // 是否是编辑模式
+      allChannels: [] // 存储所有的频道
     }
+  },
+  methods: {
+    // 加载所有的频道列表
+    async loadAllChannels () {
+      try {
+        const data = await getAllChannels()
+        this.allChannels = data.channels
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  },
+  created () {
+    // 加载所有的频道列表
+    this.loadAllChannels()
   }
 }
 </script>
