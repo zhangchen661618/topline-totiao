@@ -29,6 +29,7 @@
       <van-grid-item
         v-for="(channel,index) in channels"
         :key="channel.id"
+        @click="handleMyChannelItem(index)"
       >
       <div slot="text"  class="van-grid-item__text" :class="{active:active===index}">
           {{channel.name}}
@@ -38,7 +39,7 @@
           slot="icon"
           class="close-icon"
           name="close"
-          v-show="isEdit"
+          v-show="isEdit && index!==0"
         />
       </van-grid-item>
     </van-grid>
@@ -94,6 +95,10 @@ export default {
       allChannels: [] // 存储所有的频道
     }
   },
+  created () {
+    // 加载所有的频道列表
+    this.loadAllChannels()
+  },
   methods: {
     // 加载所有的频道列表
     async loadAllChannels () {
@@ -103,12 +108,18 @@ export default {
       } catch (err) {
         console.log(err)
       }
+    },
+    // 点击我的频道的时候
+    handleMyChannelItem (index) {
+      // 1 非编辑模式
+      if (!this.isEdit) {
+        // 告诉父组件，选中频道的索引  关闭对话框
+        this.$emit('activeChange', index)
+      }
+      // 2 编辑模式
     }
-  },
-  created () {
-    // 加载所有的频道列表
-    this.loadAllChannels()
   }
+
 }
 </script>
 

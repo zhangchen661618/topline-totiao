@@ -68,7 +68,7 @@
         v-model="showMoreAction"></more-action>
 
         <!-- 弹出频道管理 ChannelEdit -->
-        <channel-edit :active='activeIndex' :channels="channels" v-model="showChannelEdit"></channel-edit>
+        <channel-edit @activeChange="handleChange" :active='activeIndex' :channels="channels" v-model="showChannelEdit"></channel-edit>
   </div>
 </template>
 
@@ -209,6 +209,11 @@ export default {
       })
       // 删除指定位置元素
       articles.splice(index, 1)
+    },
+    // 在频道管理组件中 点击我的频道，索引发生变化的时候执行
+    handleChange (index) {
+      this.activeIndex = index
+      this.showChannelEdit = false
     }
   }
 }
