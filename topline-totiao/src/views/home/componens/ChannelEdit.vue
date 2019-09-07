@@ -47,6 +47,7 @@
     <van-cell title="推荐频道" label="点击添加频道" />
     <van-grid>
       <van-grid-item
+        @click="handleChannelItem(channel)"
         v-for="channel in recomendChannels"
         :key="channel.id"
         :text="channel.name"
@@ -134,6 +135,19 @@ export default {
         return
       }
       // 没有登陆把频道列表纪录到本地存储中
+      setItem('channels', this.channels)
+    },
+    // 点击推荐频道的时候
+    handleChannelItem (channel) {
+      // 1 把channel添加到我的频道
+      this.channels.push(channel)
+      // 2 判断是否登陆
+      if (this.user) {
+        // 3 如果登陆，发送请求
+        return
+      }
+
+      // 4 如果没有登陆，把我的频道存储到我的存储
       setItem('channels', this.channels)
     }
   }
