@@ -27,9 +27,9 @@
     </van-cell>
     <van-grid>
       <van-grid-item
-        v-for="value in 8"
-        :key="value"
-        text="文字"
+        v-for="channel in channels"
+        :key="channel.id"
+        :text="channel.name"
       >
         <!-- 关闭按钮 -->
         <van-icon
@@ -59,6 +59,10 @@ export default {
   props: {
     value: {
       type: Boolean,
+      required: true
+    },
+    channels: {
+      type: Array,
       required: true
     }
   },

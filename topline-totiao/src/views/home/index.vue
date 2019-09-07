@@ -68,7 +68,7 @@
         v-model="showMoreAction"></more-action>
 
         <!-- 弹出频道管理 ChannelEdit -->
-        <channel-edit v-model="showChannelEdit"></channel-edit>
+        <channel-edit :channels="channels" v-model="showChannelEdit"></channel-edit>
   </div>
 </template>
 
