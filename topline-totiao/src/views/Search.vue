@@ -5,7 +5,7 @@
         v-model="value"
         placeholder="请输入搜索关键词"
         show-action
-        @search="onSearch"
+        @search="onSearch(value)"
         @cancel="onCancel"
         @input="handleInput"
         clearable
@@ -14,6 +14,7 @@
     <!-- 搜索提示 -->
     <van-cell-group v-show="value">
         <van-cell
+        @click="onSearch(item)"
          v-for="item in suggestionList"
          :key="item"
          :title="item"
@@ -30,7 +31,7 @@
             </div>
             <van-icon v-show="!isEdit" @click="isEdit=true" name="delete" size='20px'/>
         </van-cell>
-        <van-cell title="单元格">
+        <van-cell v-for="item in histories" :key="item" :title="item">
             <!-- 自定义右侧内容 -->
             <van-icon v-show="isEdit" name="close" size='18px'/>
         </van-cell>
@@ -46,11 +47,18 @@ export default {
     return {
       value: '',
       suggestionList: [], // 存储搜索建议
-      isEdit: false // 编辑模式
+      isEdit: false, // 编辑模式
+      histories: [] // 历史纪录
     }
   },
   methods: {
-    onSearch () {},
+    onSearch (item) {
+      // 判断 histories 中是否已经存在 item
+      if (!this.histories.includes(item)) {
+        // 纪录搜索历史
+        this.histories.push(item)
+      }
+    },
     onCancel () {},
     // 在文本框输入的过程获取搜索提示
     async handleInput () {
