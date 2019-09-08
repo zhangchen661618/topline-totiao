@@ -6,20 +6,42 @@
             left-arrow
             fixed
             @click-left="$router.back()"
-        />
+            />
 
         <van-list
             v-model="loading"
             :finished="finished"
             finished-text="没有更多了"
             @load="onLoad"
-        >
+            >
         <van-cell
             v-for="article in list"
             :key="article.art_id.toString()"
             :title="article.title"
-        />
-</van-list>
+            >
+            <div slot='label'>
+                <!-- grid 显示封面 -->
+                <van-grid v-if="article.cover.type" :border="false" :column-num="3">
+                <van-grid-item
+                v-for="(img,index) in article.cover.images"
+                :key="img+index">
+                    <van-image lazy-load height="80" :src="img">
+                    <template v-slot:loading>
+                        <van-loading type="spinner" size="20" />
+                    </template>
+                    <!-- 自定义加载失败 -->
+                    <template v-slot:error>加载失败</template>
+                    </van-image>
+                </van-grid-item>
+                </van-grid>
+                <p>
+                <span>{{article.aut_name}}</span>&nbsp;
+                <span>{{article.comm_count}}评论</span>&nbsp;
+                <span>{{article.pubdate | fmtDate}}</span>&nbsp;
+                </p>
+            </div>
+        </van-cell>
+        </van-list>
     </div>
 </template>
 
@@ -41,7 +63,7 @@ export default {
   methods: {
     async onLoad () {
       try {
-        const data = getSearchResults({
+        const data = await getSearchResults({
           page: this.page,
           per_page: this.per_page,
           q: this.q
