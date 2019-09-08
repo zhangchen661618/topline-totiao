@@ -41,6 +41,8 @@
 
 <script>
 import { getSuggestion } from '../api/search'
+import { mapState } from 'vuex'
+import * as storageTools from '../utils/localStorage'
 export default {
   name: 'Search',
   data () {
@@ -51,13 +53,33 @@ export default {
       histories: [] // 历史纪录
     }
   },
+  computed: {
+    ...mapState(['user'])
+  },
+  created () {
+    // 加载历史纪录
+    if (this.user) {
+      // 从服务器获取数据
+      return
+    }
+    // 没有登陆，从本地存储获取数据
+    this.histories = storageTools.getItem('history') || []
+  },
   methods: {
     onSearch (item) {
       // 判断 histories 中是否已经存在 item
-      if (!this.histories.includes(item)) {
-        // 纪录搜索历史
-        this.histories.push(item)
+      if (this.histories.includes(item)) {
+        return
       }
+      // 纪录搜索历史
+      this.histories.push(item)
+      // 判断用户是否登陆
+      if (this.user) {
+        // 发送请求
+        return
+      }
+      // 没有登陆 把历史纪录存储到本地存储
+      storageTools.setItem('history', this.histories)
     },
     onCancel () {},
     // 在文本框输入的过程获取搜索提示
