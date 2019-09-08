@@ -31,9 +31,9 @@
             </div>
             <van-icon v-show="!isEdit" @click="isEdit=true" name="delete" size='20px'/>
         </van-cell>
-        <van-cell v-for="item in histories" :key="item" :title="item">
+        <van-cell v-for="(item,index) in histories" :key="item" :title="item">
             <!-- 自定义右侧内容 -->
-            <van-icon v-show="isEdit" name="close" size='18px'/>
+            <van-icon v-show="isEdit" name="close" @click="handleDelete(index)" size='18px'/>
         </van-cell>
     </van-cell-group>
   </div>
@@ -94,6 +94,11 @@ export default {
       } catch (err) {
         console.log(err)
       }
+    },
+    // 点击历史纪录的删除按钮
+    handleDelete (index) {
+      this.histories.splice(index, 1)
+      storageTools.setItem('history', this.histories)
     }
   }
 }
