@@ -15,15 +15,16 @@
             @load="onLoad"
         >
         <van-cell
-            v-for="item in list"
-            :key="item"
-            :title="item"
+            v-for="article in list"
+            :key="article.art_id.toString()"
+            :title="article.title"
         />
 </van-list>
     </div>
 </template>
 
 <script>
+import { getSearchResults } from '../api/search'
 export default {
   name: 'SerchResult',
   props: ['q'],
@@ -31,25 +32,31 @@ export default {
     return {
       list: [],
       loading: false,
-      finished: false
+      finished: false,
+      page: 1,
+      per_page: 10
     }
   },
 
   methods: {
-    onLoad () {
-      // 异步更新数据
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1)
-        }
-        // 加载状态结束
+    async onLoad () {
+      try {
+        const data = getSearchResults({
+          page: this.page,
+          per_page: this.per_page,
+          q: this.q
+        })
+        // 把获取到的结果push到数组中
+        this.list.push(...data.results)
+        this.page++
         this.loading = false
-
-        // 数据全部加载完成
-        if (this.list.length >= 40) {
+        // 判断是否加载完毕
+        if (data.results.length === 0) {
           this.finished = true
         }
-      }, 500)
+      } catch (err) {
+        this.$toast.fail('获取搜索结果失败')
+      }
     }
   }
 }
