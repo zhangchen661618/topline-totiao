@@ -7,15 +7,12 @@
       fixed
       @click-left="$router.back()"
     />
-    <div class="article">
+    <div class="article" v-if="article">
       <!-- 文章标题 -->
-      <h2 class="article-title">这是文章的标题</h2>
+      <h2 class="article-title">{{article.title}}</h2>
       <!-- 作者信息 -->
       <!-- 文章内容 -->
-      <div class="article-content">
-        <p>hello world</p>
-        <p>hello world</p>
-        <p>hello world</p>
+      <div class="article-content" v-html="article.title">
       </div>
       <!-- 点赞和取消 -->
     </div>
@@ -23,22 +20,43 @@
 </template>
 
 <script>
+import { getArticle } from '../../api/article'
 export default {
   name: 'Detail',
-  props: ['id']
+  props: ['id'],
+  data () {
+    return {
+      article: null
+    }
+  },
+  created () {
+    // 根据id，获取文章的详情
+    this.loadData()
+  },
+  methods: {
+    // 加载文章详情
+    async loadData () {
+      try {
+        const data = await getArticle(this.id)
+        this.article = data
+      } catch (err) {
+        this.$toast.fail('获取文章详情失败')
+      }
+    }
+  }
 }
 </script>
 
 <style lang="less" scoped>
 .article {
-  margin-top: 92px;
+  margin-top: 46px;
   padding: 0px 20px;
   .article-title {
-    font-size: 40px;
+    font-size: 20px;
     font-weight: bold;
   }
   .article-content {
-    font-size: 26px;
+    font-size: 14px;
   }
 }
 </style>

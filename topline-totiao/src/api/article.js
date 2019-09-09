@@ -36,3 +36,8 @@ export const reportArtice = ({
     type
   })
 }
+
+// 获取文章详情，id文章的id
+export const getArticle = (id) => {
+  return request.get(`/app/v1_0/articles/${id}`)
+}
