@@ -11,6 +11,7 @@
       <!-- 文章标题 -->
       <h2 class="article-title">{{article.title}}</h2>
       <!-- 作者信息 -->
+      <author-info :article='article'></author-info>
       <!-- 文章内容 -->
       <div class="article-content" v-html="article.title">
       </div>
@@ -21,9 +22,14 @@
 
 <script>
 import { getArticle } from '../../api/article'
+// 加载作者组件信息
+import AuthorInfo from './component/Authorlnfo'
 export default {
   name: 'Detail',
   props: ['id'],
+  components: {
+    AuthorInfo
+  },
   data () {
     return {
       article: null
