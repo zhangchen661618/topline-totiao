@@ -11,8 +11,8 @@
       <van-button
         type="danger"
         :loading="loading"
-        @click="handleFollow()"
-      >{{article. is_followed?'已':''}}关注</van-button>
+        @click="handleFollow"
+      >{{article. is_followed ? '已':''}}关注</van-button>
     </div>
   </div>
 </template>
@@ -30,9 +30,8 @@ export default {
   methods: {
     // 点击按钮关注或者取消关注
     async handleFollow () {
-      this.loading = true
       // 判断是否登陆
-      if (this.$checkLogin()) {
+      if (!this.$checkLogin()) {
         return
       }
       this.loading = true
@@ -48,6 +47,7 @@ export default {
           this.article.is_followed = true
         }
       } catch (err) {
+        console.loading(err)
         this.$toast.fail('操作失败')
       }
       this.loading = false
