@@ -5,7 +5,7 @@
       title="文章详情"
       left-text="返回"
       fixed
-      @click-left="$router.back()"
+      @click-left="$router.push('/')"
     />
     <div class="article" v-if="article">
       <!-- 文章标题 -->
@@ -21,8 +21,8 @@
       <comment-list :isArticle='true' :id="article.art_id.toString()"></comment-list>
       <!-- 发布评论 -->
       <send-comment :target='article.art_id.toString()' :isArticle="true"></send-comment>
-      <!-- 加载评论回复的组件 -->
-      <reply-list v-model="showReplyList"></reply-list>
+      <!-- 加载回复的评论回复的组件 -->
+      <reply-list v-model="showReplyList" :art_id='id'></reply-list>
     </div>
   </div>
 </template>
