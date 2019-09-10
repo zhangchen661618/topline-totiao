@@ -1,5 +1,6 @@
 import request from '../utils/request'
 
+// 获取评论列表
 export const getComments = ({
   isArticle,
   source, // 源id，文章id或评论id
@@ -14,5 +15,18 @@ export const getComments = ({
       offset,
       limit
     }
+  })
+}
+
+// 发布评论
+export const sendComment = ({
+  target, // 评论的目标id（评论文章即为文章id，对评论进行回复则为评论id）
+  content, // 评论内容
+  art_id // 文章id
+}) => {
+  return request.post('/app/v1_0/comments', {
+    target,
+    content,
+    art_id
   })
 }
