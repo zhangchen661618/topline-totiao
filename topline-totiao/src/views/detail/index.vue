@@ -17,6 +17,8 @@
       </div>
       <!-- 点赞和取消 -->
       <more-action :article='article'></more-action>
+      <!-- 评论列表 -->
+      <comment-list></comment-list>
     </div>
   </div>
 </template>
@@ -27,12 +29,15 @@ import { getArticle } from '../../api/article'
 import AuthorInfo from './component/Authorlnfo'
 // 加载更多的操作
 import MoreAction from './component/MoreAction'
+// 加载评论列表
+import CommentList from './component/CommentList'
 export default {
   name: 'Detail',
   props: ['id'],
   components: {
     AuthorInfo,
-    MoreAction
+    MoreAction,
+    CommentList
   },
   data () {
     return {
