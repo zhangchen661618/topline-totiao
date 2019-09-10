@@ -32,6 +32,10 @@ export default {
     async handleFollow () {
       this.loading = true
       // 判断是否登陆
+      if (this.$checkLogin()) {
+        return
+      }
+      this.loading = true
       try {
         // 判断是否已经关注
         if (this.article.is_followed) {

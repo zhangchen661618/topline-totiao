@@ -9,9 +9,13 @@ import zhCN from 'vee-validate/dist/locale/zh_CN'
 import { fmtDate } from '../src/utils/dayjs'
 import 'vant/lib/index.css'
 import './styles/index.less'
+import Checklogin from './utils/CheckLogin'
 
+// 注册插件  Checklogin.install(Vue)
+Vue.use(Checklogin)
 // 获取相对时间的过滤器
 Vue.filter('fmtDate', fmtDate)
+
 Vue.use(Vant)
 
 // 配置插件 VeeValidate
