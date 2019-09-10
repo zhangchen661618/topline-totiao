@@ -34,6 +34,7 @@
 
 <script>
 import { getComments } from '../../../api/comment'
+import eventHub from '@/utils/eventHub'
 export default {
   name: 'CommentList',
   props: ['isArticle', 'id'],
@@ -45,6 +46,12 @@ export default {
       offset: null, // 获取评论数据的偏移量，值为评论id，表示从此id的数据向后取，不传表示从第一页开始读取数据
       limit: 10 // 每页获取多少条数据
     }
+  },
+  created () {
+    // 注册评论发布成功的事件
+    eventHub.$on('sendSuccess', (comment) => {
+      this.list.unshift(comment)
+    })
   },
   methods: {
     async onLoad () {

@@ -16,6 +16,7 @@
 
 <script>
 import { sendComment } from '../../../api/comment'
+import eventHub from '@/utils/eventHub'
 export default {
   name: 'SendComment',
   // target 给文章发送评论  文章的id 给评论回复 评论的id
@@ -43,6 +44,8 @@ export default {
           content: this.content,
           art_id: this.art_id
         })
+        // 触发事件
+        eventHub.$emit('sendSuccess', data.new_obj)
         this.content = ''
       } catch (err) {
         this.$toast.fail('发送失败')
