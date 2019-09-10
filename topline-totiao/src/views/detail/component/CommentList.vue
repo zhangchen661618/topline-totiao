@@ -49,8 +49,11 @@ export default {
   },
   created () {
     // 注册评论发布成功的事件
-    eventHub.$on('sendSuccess', (comment) => {
-      this.list.unshift(comment)
+    eventHub.$on('sendSuccess', (obj) => {
+      // obj.comment 新增的属性  isArticle
+      if (this.isArticle === obj.isArticle) {
+        this.list.unshift(obj.comment)
+      }
     })
   },
   methods: {

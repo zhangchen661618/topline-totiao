@@ -45,7 +45,10 @@ export default {
           art_id: this.art_id
         })
         // 触发事件
-        eventHub.$emit('sendSuccess', data.new_obj)
+        eventHub.$emit('sendSuccess', {
+          comment: data.new_obj,
+          isArticle: this.isArticle
+        })
         this.content = ''
       } catch (err) {
         this.$toast.fail('发送失败')
