@@ -7,8 +7,8 @@
       @load="onLoad"
     >
       <van-cell
-        v-for="commit in list"
-        :key="commit.com_id.toString()"
+        v-for="comment in list"
+        :key="comment.com_id.toString()"
       >
         <div slot="icon">
           <img class="avatar" :src="comment.aut_photo" alt="">
@@ -77,5 +77,8 @@ export default {
   height: 25px;
   border-radius: 100%;
   margin-right: 5px;
+}
+.van-list{
+  margin-bottom: 64px;
 }
 </style>
