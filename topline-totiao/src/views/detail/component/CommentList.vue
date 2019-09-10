@@ -41,7 +41,7 @@ export default {
     return {
       loading: false,
       finished: false,
-      list: [],
+      list: [], // 评论列表
       offset: null, // 获取评论数据的偏移量，值为评论id，表示从此id的数据向后取，不传表示从第一页开始读取数据
       limit: 10 // 每页获取多少条数据
     }

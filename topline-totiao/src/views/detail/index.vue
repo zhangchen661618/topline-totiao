@@ -20,7 +20,7 @@
       <!-- 评论列表 -->
       <comment-list :isArticle='true' :id="article.art_id.toString()"></comment-list>
       <!-- 发布评论 -->
-      <send-comment :isArticle="true"></send-comment>
+      <send-comment :target='article.art_id.toString()' :isArticle="true"></send-comment>
     </div>
   </div>
 </template>
