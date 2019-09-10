@@ -65,7 +65,12 @@ instance.interceptors.response.use(function (response) {
     } catch (err) {
       // 跳转到首页
       // 如果refresh_token过期，跳转到登录页面
-      router.push('/login')
+      router.push({
+        path: '/login',
+        query: {
+          redirect: router.currentRoute.fullPath
+        }
+      })
     }
   }
 
