@@ -14,7 +14,13 @@ export default {
         }).then(() => {
         // on confirm 点击确认按钮执行
         // 点击确定按钮，跳转到登陆页面
-          this.$router.push('/login')
+          this.$router.push({
+            path: '/login',
+            //   params 动态路由参数    query 查询字符串
+            query: {
+              redirect: this.$route.fullPath
+            }
+          })
         }).catch(() => {
         // on cancel 点击取消按钮执行
         })

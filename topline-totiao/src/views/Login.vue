@@ -88,7 +88,10 @@ export default {
         // 存储登陆的状态  1,vuex 2,本地存储  这两件事在 store 中完成
         this.setUser(data)
         // 跳转到首页
-        this.$router.push('/')
+        // 获取url上的查询字符串 redirect
+        // 如果获取到redirect ，跳转到redirect指向地址
+        // 如果没有redirect跳转首页
+        this.$router.push(this.$route.query.redirect || '/')
         this.$toast.success('登陆成功')
       } catch (err) {
         this.$toast.fail('登陆失败')
