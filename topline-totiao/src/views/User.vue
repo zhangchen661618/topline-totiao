@@ -10,7 +10,7 @@
     <!-- 已登录 -->
     <div v-else>
         <van-cell-group class="user-info">
-            <van-cell class="base-info" is-link :border="false">
+            <van-cell class="base-info" @click="$router.push('user-profile')" is-link :border="false">
             <div slot="title">
                 <img class="avatar" :src="userInfo.photo" alt="">
                 <span class="title">{{userInfo.name}}</span>

@@ -24,6 +24,11 @@ export default new Router({
       ]
     },
     {
+      path: '/user-profile',
+      name: 'user-profile',
+      component: () => import(/* webpackChunkName: "user-profile" */ '../views/user-profile/index.vue')
+    },
+    {
       path: '/search',
       name: 'search',
       component: () => import(/* webpackChunkName: "search" */ '../views/Search.vue')
