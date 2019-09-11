@@ -5,27 +5,46 @@
         right-text="保存"
         left-arrow
         @click-left="$router.back()"
-        @click-right="btnSave"
         />
-
+        <!-- @click-right="btnSave" -->
         <van-cell-group>
         <van-cell title="头像" is-link>
             <div slot="default">
-            <img width="30" height="30" src="http://toutiao.meiduo.site/Fp2XB3DG7Dsye6hAcpg9ZI_yzcpV" alt="">
+            <img width="30" height="30" :src="userProfile.photo" alt="">
             </div>
         </van-cell>
-        <van-cell title="昵称" is-link value="用户的名字" />
+        <van-cell title="昵称" is-link :value="userProfile.name" />
         </van-cell-group>
         <van-cell-group>
-        <van-cell title="性别" is-link value="男" />
-        <van-cell title="生日" is-link value="2000-1-1"/>
+        <van-cell title="性别" is-link :value="userProfile.gender?'女':'男'" />
+        <van-cell title="生日" is-link :value="userProfile.birthday"/>
     </van-cell-group>
   </div>
 </template>
 
 <script>
+import { getUserProfile } from '../../api/user'
 export default {
-
+  name: 'UserProfile',
+  data () {
+    return {
+      userProfile: {}
+    }
+  },
+  created () {
+    // 获取用户资料
+    this.loadUserProfile()
+  },
+  methods: {
+    async loadUserProfile () {
+      try {
+        const data = await getUserProfile()
+        this.userProfile = data
+      } catch (err) {
+        this.$toast.fail('获取用户资料失败')
+      }
+    }
+  }
 }
 </script>
 
