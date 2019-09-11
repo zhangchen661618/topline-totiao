@@ -12,26 +12,26 @@
         <van-cell-group class="user-info">
             <van-cell class="base-info" is-link :border="false">
             <div slot="title">
-                <img class="avatar" src="http://toutiao.meiduo.site/FgSTA3msGyxp5-Oufnm5c0kjVgW7" alt="">
-                <span class="title">只是为了好玩儿</span>
+                <img class="avatar" :src="userInfo.photo" alt="">
+                <span class="title">{{userInfo.name}}</span>
             </div>
             </van-cell>
 
             <van-grid class="data-info" :border="false">
             <van-grid-item>
-                <span class="count">1</span>
+                <span class="count">{{userInfo.art_count}}</span>
                 <span class="text">头条</span>
             </van-grid-item>
             <van-grid-item>
-                <span class="count">2</span>
+                <span class="count">{{userInfo.follow_count}}</span>
                 <span class="text">关注</span>
             </van-grid-item>
             <van-grid-item>
-                <span class="count">3</span>
+                <span class="count">{{userInfo.fans_count}}</span>
                 <span class="text">粉丝</span>
             </van-grid-item>
             <van-grid-item>
-                <span class="count">4</span>
+                <span class="count">{{userInfo.like_count}}</span>
                 <span class="text">获赞</span>
             </van-grid-item>
             </van-grid>
@@ -57,12 +57,35 @@
 
 <script>
 import { mapState } from 'vuex'
+import { getUserInfo } from '../api/user'
 export default {
   name: 'User',
   computed: {
     ...mapState(['user'])
   },
+  data () {
+    return {
+      userInfo: {}
+    }
+  },
+  created () {
+    // 加载当前登录用户的信息
+    this.loadUserInfo()
+  },
   methods: {
+    // 加载当前登录用户的信息
+    async loadUserInfo () {
+      // 判断用户是否登录
+      if (!this.$checkLogin()) {
+        return
+      }
+      try {
+        const data = await getUserInfo()
+        this.userInfo = data
+      } catch (err) {
+        this.$toast.fail('获取用户信息失败')
+      }
+    },
     // 点击登录按钮，跳转到登录页面
     handleLogin () {
       this.$router.push({
