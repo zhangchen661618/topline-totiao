@@ -50,3 +50,25 @@ export const uploadPhoto = (key, file) => {
   formData.append(key, file)
   return request.patch('/app/v1_0/user/photo', formData)
 }
+
+// 获取关注用户列表
+export const getFollowings = ({
+  page,
+  perpage
+}) => {
+  return request.get('/app/v1_0/user/followings', {
+    page,
+    per_page: perpage
+  })
+}
+
+// 获取粉丝用户列表
+export const getFollowers = ({
+  page,
+  perpage
+}) => {
+  return request.get('/app/v1_0/user/followers', {
+    page,
+    per_page: perpage
+  })
+}
