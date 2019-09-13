@@ -21,7 +21,7 @@
     </van-cell-group>
 
     <!-- 弹出上传文件的组件 -->
-    <upload-file v-model="showUploadFile"></upload-file>
+    <upload-file @upload-success="handleSuccess" v-model="showUploadFile"></upload-file>
   </div>
 </template>
 
@@ -51,6 +51,10 @@ export default {
       } catch (err) {
         this.$toast.fail('获取用户资料失败')
       }
+    },
+    // 头像上传成功
+    handleSuccess (photo) {
+      this.userProfile.photo = photo
     }
   }
 }

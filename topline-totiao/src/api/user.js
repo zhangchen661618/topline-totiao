@@ -43,3 +43,10 @@ export const getUserInfo = () => {
 export const getUserProfile = () => {
   return request.get('/app/v1_0/user/profile')
 }
+
+// 上传图片文件
+export const uploadPhoto = (key, file) => {
+  const formData = new FormData()
+  formData.append(key, file)
+  return request.patch('/app/v1_0/user/photo', formData)
+}
