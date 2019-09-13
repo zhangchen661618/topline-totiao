@@ -9,10 +9,10 @@
       <!-- tabs -->
     <van-tabs v-model="active" color='blue'>
         <van-tab title="关注">
-          <user-list :type="type"></user-list>
+          <user-list :type="active"></user-list>
         </van-tab>
         <van-tab title="粉丝">
-          <user-list :type="type"></user-list>
+          <user-list :type="active"></user-list>
         </van-tab>
     </van-tabs>
 
