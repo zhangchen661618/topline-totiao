@@ -18,7 +18,6 @@
 import Vue from 'vue'
 import { ImagePreview } from 'vant'
 import { uploadPhoto } from '../../../api/user'
-import { async } from 'q'
 
 Vue.use(ImagePreview)
 export default {
