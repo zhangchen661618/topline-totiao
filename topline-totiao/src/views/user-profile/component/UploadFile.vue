@@ -15,6 +15,10 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import { ImagePreview } from 'vant'
+
+Vue.use(ImagePreview)
 export default {
   name: 'UploadFile',
   props: ['value'],
@@ -25,8 +29,27 @@ export default {
 
       // 给 file 注册onchange 事件
       this.$refs.file.onchange = (e) => {
+        // 如果没有选择图片，返回
+        if (e.target.files.length === 0) {
+          return
+        }
+
+        // 图片在内存中可以访问的临时路径
         const url = URL.createObjectURL(e.target.files[0])
-        console.log(url)
+        // console.log(url)
+        // 关闭弹出对话框
+        this.$emit('input', false)
+        // 图片预览
+        ImagePreview({
+          images: [
+            url
+          ],
+          // 不显示页码
+          showIndex: false,
+          onClose () {
+            // do something
+          }
+        })
       }
     }
   }
